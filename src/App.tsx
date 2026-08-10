@@ -17,8 +17,12 @@ const SHAPES: Record<number, number[][]> = {
 };
 
 const COLORS: Record<number, string> = {
-  1: "#35c9d0", 2: "#f0c96b", 3: "#a96bd9", 4: "#54b98c",
-  5: "#e56b65", 6: "#5e86d8", 7: "#e9914f",
+  1: "#22b8c7", 2: "#f1c75b", 3: "#2959a8", 4: "#43a57a",
+  5: "#c94f3d", 6: "#163d78", 7: "#e58b35",
+};
+
+const GLYPHS: Record<number, string> = {
+  1: "𓂀", 2: "𓆣", 3: "𓅓", 4: "𓇳", 5: "𓋹", 6: "𓃭", 7: "𓆑",
 };
 
 type Piece = { shape: number[][]; type: number; x: number; y: number };
@@ -60,7 +64,7 @@ function MiniPiece({ piece }: { piece: Piece }) {
       const offsetX = Math.floor((4 - piece.shape[0].length) / 2);
       const offsetY = Math.floor((4 - piece.shape.length) / 2);
       const filled = piece.shape[y - offsetY]?.[x - offsetX];
-      return <span key={i} className={filled ? "mini-cell filled" : "mini-cell"} style={filled ? { "--cell-color": COLORS[piece.type] } as React.CSSProperties : undefined} />;
+      return <span key={i} className={filled ? "mini-cell filled" : "mini-cell"} data-glyph={filled ? GLYPHS[piece.type] : undefined} style={filled ? { "--cell-color": COLORS[piece.type] } as React.CSSProperties : undefined} />;
     })}
   </div>;
 }
@@ -226,48 +230,53 @@ export default function Home() {
     if (cell && py >= 0 && py < ROWS && px >= 0 && px < COLS) display[py][px] = piece.type;
   }));
 
-  return <main>
-    <div className="stars" />
+  return <main data-design-version="egypt-7-flat-no-palms">
+    <div className="desert-sky" />
+    <div className="sun-disc" />
+    <div className="pyramid pyramid-left" />
+    <div className="pyramid pyramid-right" />
+    <div className="nile"><span>NILE</span></div>
+    <div className="dunes" />
     <header className="masthead">
-      <div className="sun-mark">✦</div>
+      <div className="sun-mark">𓂀</div>
       <div>
-        <p className="eyebrow">شبِ بازی · SHAB-E BĀZI</p>
-        <h1>Shab-e <em>Tetris</em></h1>
-        <p className="subtitle">A midnight puzzle from the Caspian shore</p>
+        <p className="eyebrow">𓇳 𓂀 𓆣 · GAME OF THE PHARAOHS · 𓆣 𓂀 𓇳</p>
+        <h1>Tetris <em>of the Nile</em></h1>
+        <p className="subtitle">Awaken the stones of the eternal kingdom</p>
       </div>
-      <div className="sun-mark">✦</div>
+      <div className="sun-mark">𓂀</div>
     </header>
 
     <section className="game-shell">
       <aside className="side left-side">
-        <div className="panel score-panel"><span>SCORE</span><strong>{score.toLocaleString("en-US")}</strong><small>امتیاز</small></div>
+        <div className="panel score-panel"><span>SCORE</span><strong>{score.toLocaleString("en-US")}</strong><small>𓏤 ROYAL TALLY 𓏤</small></div>
         <div className="two-stats">
           <div className="panel"><span>LINES</span><strong>{lines}</strong></div>
           <div className="panel"><span>LEVEL</span><strong>{level}</strong></div>
         </div>
-        <div className="panel best-panel"><span>HIGH SCORE</span><strong>{best.toLocaleString("en-US")}</strong><small>رکورد شب</small></div>
-        <div className="quote">“Patience is the key to joy.”<span>— Persian proverb</span></div>
+        <div className="panel best-panel"><span>HIGH SCORE</span><strong>{best.toLocaleString("en-US")}</strong><small>𓂀 ETERNAL RECORD 𓂀</small></div>
+        <div className="quote">“To speak the name of the dead is to make them live again.”<span>— Ancient Egyptian saying</span></div>
       </aside>
 
       <div className="board-wrap">
-        <div className="arch">
-          <span className="arch-star">✦</span>
-          <button className="sound-toggle" onClick={toggleSound} aria-label={muted ? "Turn sound on" : "Mute sound"} title={muted ? "Sound off" : "Sound on"}>{muted ? "♪̸" : "♪"}</button>
+        <div className="temple-bar">
+          <span className="temple-bar-symbol">𓇳</span>
+          <button className="sound-toggle" onClick={toggleSound} aria-label={muted ? "Turn sound on" : "Mute sound"} title={muted ? "Sound off" : "Sound on"}>{muted ? "🔇" : "🔊"}</button>
         </div>
         <div className="board" role="grid" aria-label="Tetris board">
-          {display.flatMap((row, y) => row.map((cell, x) => <span key={`${y}-${x}`} className={cell ? "cell filled" : "cell"} style={cell ? { "--cell-color": COLORS[cell] } as React.CSSProperties : undefined} />))}
+          {display.flatMap((row, y) => row.map((cell, x) => <span key={`${y}-${x}`} className={cell ? "cell filled" : "cell"} data-glyph={cell ? GLYPHS[cell] : undefined} style={cell ? { "--cell-color": COLORS[cell] } as React.CSSProperties : undefined} />))}
           {status !== "playing" && <div className="overlay">
-            <div className="overlay-ornament">✦</div>
-            <h2>{status === "paused" ? "A moment of silence" : status === "over" ? "The night is over" : "The night begins"}</h2>
-            <p>{status === "paused" ? "بازی متوقف شد · Game paused" : status === "over" ? `Your score: ${score.toLocaleString("en-US")}` : "Build a mosaic from falling shapes"}</p>
-            <button onClick={status === "paused" ? pause : start}>{status === "paused" ? "RETURN TO GAME" : status === "over" ? "PLAY AGAIN" : "START GAME"}</button>
+            <div className="overlay-ornament">𓂀</div>
+            <h2>{status === "paused" ? "The sands stand still" : status === "over" ? "The dynasty has fallen" : "Enter the royal tomb"}</h2>
+            <p>{status === "paused" ? "𓇳 · GAME PAUSED · 𓇳" : status === "over" ? `Your royal tally: ${score.toLocaleString("en-US")}` : "Stack the sacred stones and defy eternity"}</p>
+            <button onClick={status === "paused" ? pause : start}>{status === "paused" ? "RETURN TO THE NILE" : status === "over" ? "RISE AGAIN" : "AWAKEN THE TOMB"}</button>
           </div>}
         </div>
-        <div className="board-base"><span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span></div>
+        <div className="board-base"><span>𓅓</span><span>𓆣</span><span>𓂀</span><span>𓆣</span><span>𓅓</span></div>
       </div>
 
       <aside className="side right-side">
-        <div className="panel next-panel"><span>NEXT</span><MiniPiece piece={next} /><small>قطعه بعدی</small></div>
+        <div className="panel next-panel"><span>NEXT RELIC</span><MiniPiece piece={next} /><small>𓏏 SACRED STONE 𓏏</small></div>
         <div className="panel controls-info">
           <span>CONTROLS</span>
           <div><kbd>←</kbd><kbd>→</kbd><b>move</b></div>
@@ -286,7 +295,7 @@ export default function Home() {
       <button onClick={() => drop(false, true)} aria-label="Move down">↓</button>
       <button className="drop-button" onClick={() => drop(true)} aria-label="Hard drop">◆</button>
     </section>
-    <footer><span>✦</span> ساخته شده با عشق · MADE WITH LOVE <span>✦</span></footer>
+    <footer><span>𓂀</span> FORGED BESIDE THE ETERNAL NILE <span>𓂀</span></footer>
   </main>;
 }
 

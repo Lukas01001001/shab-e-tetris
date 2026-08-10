@@ -1,19 +1,19 @@
-# Shab-e Tetris
+# Tetris of the Nile
 
-A playable Tetris-inspired puzzle game with a Persian/Iranian visual style, English interface, Persian decorative typography, responsive controls, and synthesized Web Audio sound effects.
+A complete Tetris-inspired puzzle game in an ancient Egyptian visual style.
 
 ## Live game
 
-[Play Shab-e Tetris](https://shab-e-tetris.vercel.app/)
+[Play on Vercel](https://shab-e-tetris.vercel.app/)
 
 ## Features
 
-- Classic falling-block gameplay
+- Ancient Egyptian design with pyramids, the Nile, gold, lapis lazuli, and hieroglyphs
+- Hieroglyphic falling blocks
 - Keyboard and touch controls
-- Score, line count, level, and local high score
-- Pause and restart controls
-- Sound effects generated in the browser (no audio files required)
-- Responsive Persian-inspired interface
+- Browser-generated sound effects with a mute control
+- Score, lines, level, and locally saved high score
+- Responsive desktop and mobile layout
 
 ## Controls
 
@@ -37,3 +37,4 @@ npm run build
 ```
 
 Built with React, TypeScript, Vite, and the Web Audio API.
+
